@@ -1,4 +1,4 @@
-"""动力与飞控，纯 numpy，可无 Kit 单测。
+"""动力与飞控，纯 numpy。
 
 四电机一阶转速响应与平方推力，X 型混控，6S 电池含内阻压降与容量消耗，
 串级飞控，位置速度姿态角速度，输出总推与三轴力矩。
@@ -222,5 +222,5 @@ class FlightController:
 
 
 def moment_from_thrust_sim(fz_cmd, moments_cmd, omega_now):
-    """单测用简化直通，检查混控与限幅逻辑。"""
+    """简化直通，检查混控与限幅逻辑。"""
     return fz_cmd, moments_cmd

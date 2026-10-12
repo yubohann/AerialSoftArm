@@ -223,7 +223,7 @@ class DroneUnit:
         self.prop_ids, _ = _find(["prop_[0-9]+"])
         self.finger_bodies = [i for i, n in enumerate(arm.body_names) if n.startswith("finger0_")]
 
-        # 腱索-关节耦合等效模式（不足#2 修订件，tendon_model.py）：
+        # 腱索-关节耦合等效模式（tendon_model.py）：
         # 弯曲 PD 从仿真驱动器转交腱索张力层，运行时经 effort 注入，不改 USD。
         self.tendon_on = bool(tendon)
         self.tendon = None
@@ -471,7 +471,7 @@ class DroneUnit:
         self.arm.write_data_to_sim()
 
     def attach_part(self, part, wrist_path="/World/DroneA/wrist"):
-        """抓取吸附，捕获相对位姿后逐帧随腕运动学携带，避免约束力扰动。"""
+        """抓取吸附：捕获相对位姿后逐帧随腕运动学携带。"""
         wi = self.arm.body_names.index("wrist")
         wrist_p = self.arm.data.body_pos_w[0, wi].detach().cpu().numpy()
         wrist_q = self.arm.data.body_quat_w[0, wi].detach().cpu().numpy()

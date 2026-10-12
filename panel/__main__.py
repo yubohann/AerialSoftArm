@@ -1,4 +1,4 @@
-"""面板入口，python -m panel，三线程加文本界面，按 88 号文档阶段一。"""
+"""面板入口，python -m panel，三线程加文本界面。"""
 import argparse
 import asyncio
 import queue

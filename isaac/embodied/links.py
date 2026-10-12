@@ -1,4 +1,4 @@
-"""链路、机载计算机、感知与视觉伺服，纯 numpy 可单测。"""
+"""链路、机载计算机、感知与视觉伺服，纯 numpy。"""
 import numpy as np
 
 import spec as S

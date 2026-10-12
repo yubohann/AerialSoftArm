@@ -1,4 +1,4 @@
-"""文本面板，屏幕键盘与参数区，全鼠标交互，按 88 号文档第 4 与第 5 节。"""
+"""文本面板，屏幕键盘与参数区，全鼠标交互。"""
 import time
 from datetime import datetime
 from pathlib import Path

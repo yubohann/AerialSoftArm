@@ -28,7 +28,7 @@ ASSIST_CLOSE_T, ASSIST_HOLD_T, ASSIST_LIFT_T = 0.3, 1.2, 6.0
 
 
 class ManualController:
-    """把按键状态翻译成 (a1, a2, a3, a4)。可脱离 viewer 单测。"""
+    """把按键状态翻译成 (a1, a2, a3, a4)。"""
 
     def __init__(self):
         self.reset()

@@ -303,7 +303,7 @@ def ramp(t, t0, t1, a, b):
 
 
 class ScriptedGrasp:
-    """写死版状态机：按夹口高度闭环下探，避免掌部压杆。"""
+    """写死版状态机：按夹口高度闭环下探，掌部不压杆。"""
 
     JAW_TARGET = BAR_Z + 0.024
     TELE_MAX = 0.5

@@ -1,26 +1,11 @@
 """腱索-关节耦合等效模型：张力、预紧、摩擦进回路。
 
-背景
-----
-Isaac 侧 AS-01 桁架臂的弯曲原为 16 个离散关节位置伺服（arm_params.DRIVES["bend"]），
-腱索未建模，走线、预紧与摩擦处于控制回路之外。本模块把 arm_real/arm_lattice.py
-（MuJoCo 真机同构模型）中的三根周向腱索提取为关节空间等效模型：
+    tau_j = T_k x r                              （张力 -> 关节力矩，r 为力臂）
+    T_k   = clip(T0 + (2/(3r)) u_k.m, 0, T_MAX) （力矩 -> 三索张力反解）
 
-    tau_j = T_k x r                                  （张力 -> 每关节力矩，r 为力臂）
-    T_k   = clip(T0 + (2/(3r)) u_k.m, 0, T_MAX)      （力矩 -> 三索张力反解）
-
-- u_k = (-sin a_k, cos a_k)：腱索 k 张力产生的弯曲力矩方向（bx、by 分量）；
-  sum_k u_k = 0，故等张力预紧 T0 是零空间基（净力矩为零、索不松弛）；
-- m 取 8 个 bx（绕 x）与 8 个 by（绕 y）关节力矩指令的均值——单组张力对同轴
-  全部关节施加相同力矩，16 关节力矩场被投影到 rank-2 子空间（腱索耦合）；
-- 库仑摩擦  tau_f = mu * Tbar * r * tanh(qd / eps)，幅值随张力（含预紧）缩放；
-- 迟滞：一阶滞后状态 h 映射 Pneumatic 的 0.045 bar 滞回（arm_real.py:300），
-  dir 由力矩指令变化方向锁存（同 Pneumatic.dir 逻辑）。
-
-参数来源全部在 arm_real/（注释给行号），运行时经
-Articulation.set_joint_effort_target 注入，不改 USD、不动冻结接口。
-
-bx/by 顺序与 arm_scene.BEND_JOINTS 一致：前 N_SEG 个 bx，后 N_SEG 个 by。
+m 取 16 个弯曲关节力矩指令均值，投影到 rank-2 腱索子空间；库仑摩擦幅值随张力
+缩放，迟滞映射气路 0.045 bar 滞回。参数来源 arm_real/arm_lattice.py，运行时经
+set_joint_effort_target 注入。
 """
 import numpy as np
 
